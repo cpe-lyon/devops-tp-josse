@@ -28,10 +28,14 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
           architecture: x64
 
       - name: Build and test with Maven
         run: mvn clean verify
 ```
+![CI Green!](image.png)
+
+### First CD
+
