@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+    backend:
+        container_name: tp1-backend-srv
+        image: jossedeoliveiracpe/tp1-backend-http:1.0
+        networks:
+         - tp1-net
+         - tp1-dbnet
+        depends_on:
+         - database
+
+    database:
+        container_name: tp1-backend-db
+        image: jossedeoliveiracpe/tp1-backend-pg:1.0
+        networks:
+         - tp1-dbnet
+        volumes:
+         - tp1-data:/var/lib/postgresql/data
+
+    httpd:
+        container_name: tp1-http-index
+        image: jossedeoliveiracpe/tp1-http:1.0
+        ports:
+         - "80:80"
+        networks:
+         - tp1-net
+        depends_on:
+         - backend
+
+networks:
+  tp1-net:
+  tp1-dbnet:
+volumes:
+  tp1-data:
