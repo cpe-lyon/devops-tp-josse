@@ -31,7 +31,7 @@ $ docker build -t tp1-backend-multistage ./tp-1/backend-api/multistage
 $ docker run --name tp1-backend-ex2 --rm tp1-backend-multistage
 ```
 
-Having a build stage is 
+Having a build stage is useful because it makes the build stage automatic, we only store what is necessary in the image without having to build the sources everytime.
 
 With the simple API:
 ```sh
