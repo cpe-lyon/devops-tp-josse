@@ -1,0 +1,9 @@
+- name: Create DB network
+  docker_network:
+    name: tp1-dbnet
+    state: present
+
+- name: Create http network
+  docker_network:
+    name: tp1-net
+    state: present

@@ -1,0 +1,10 @@
+- hosts: all
+  gather_facts: false
+  become: true
+  # We execute the tasks in the role: docker
+  roles:
+    - install-docker
+    - create-network
+    - launch-db
+    - launch-app
+    - launch-proxy
