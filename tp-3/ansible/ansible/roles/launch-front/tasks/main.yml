@@ -1,0 +1,9 @@
+# We launch our deployed image with port 80 to expose it
+- name: Launch Front
+  docker_container:
+    name: tp1-frontend-srv
+    networks:
+      - name: tp1-net
+    image: jossedeoliveiracpe/tp-devops-front:latest
+    pull: true
+    recreate: true

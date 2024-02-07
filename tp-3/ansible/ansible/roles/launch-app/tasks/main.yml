@@ -1,0 +1,15 @@
+# We launch our deployed image: connected to 2 networks: one for API-DB the other for router-API
+- name: Launch App
+  docker_container:
+    name: tp1-backend-srv
+    image: jossedeoliveiracpe/tp-devops-simple-api:latest
+    networks:
+      - name: tp1-net
+      - name: tp1-dbnet
+    env:
+      POSTGRES_DB: "{{ pgdb }}"
+      POSTGRES_USER: "{{ pgusr }}"
+      POSTGRES_PASSWORD: "{{ pgpwd }}"
+      POSTGRES_HOST: "{{ pgurl }}"
+    pull: true
+    recreate: true

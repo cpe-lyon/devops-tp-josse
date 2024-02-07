@@ -1,0 +1,15 @@
+all:
+ vars:
+   # log in informations
+   ansible_user: centos
+   ansible_ssh_private_key_file: ~/tp-3/ansible/keys/id_rsa
+   
+   pgdb: "db"
+   pgusr: "usr"
+   pgpwd: "pwd"
+   dbcname: "tp1-backend-db2"
+   pgurl: "{{dbcname}}:5432"
+ children:
+   # all hosts
+   prod: # prod host
+     hosts: josse.de-oliveira.takima.cloud

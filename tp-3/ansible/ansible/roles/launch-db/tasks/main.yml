@@ -1,0 +1,21 @@
+# We check and create volume (if not created yet)
+- name: Create volume
+  docker_volume:
+    name: tp1-data
+    state: present
+
+# We launch our deployed image with the volume
+- name: Launch database
+  docker_container:
+    name: "{{ dbcname }}"
+    image: jossedeoliveiracpe/tp-devops-database:latest
+    networks:
+    - name: tp1-dbnet
+    volumes:
+    - 'tp1-data:/var/lib/postgresql/data:rw'
+    env:
+      POSTGRES_DB: "{{ pgdb }}"
+      POSTGRES_USER: "{{ pgusr }}"
+      POSTGRES_PASSWORD: "{{ pgpwd }}"
+    pull: true
+    recreate: true

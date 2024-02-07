@@ -1,0 +1,12 @@
+# We launch our deployed image with port 80 to expose it
+- name: Launch HTTPD
+  docker_container:
+    name: tp1-http-index
+    networks:
+      - name: tp1-net
+    ports:
+      - "80:80"
+      - "8080:8080"
+    image: jossedeoliveiracpe/tp-devops-httpd:latest
+    pull: true
+    recreate: true

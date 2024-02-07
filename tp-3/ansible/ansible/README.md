@@ -127,8 +127,6 @@ After that, we move all tasks to `roles/docker/tasks/main.yml` and we change `pl
 We use the docker role to execute all its tasks
 
 ### Adding front
-We will add a front-end build to the application in the GitHub Actions (same repo as TP2) and Ansible config
+We will add a front-end build to the application in the GitHub Actions and Ansible config
 
-Docker compose won't be changed because developers will use the dev mode (`npm run serve`)
-
-![Front screenshot](image.png)
+Docker compose won't be changed because developers will use the dev mode
