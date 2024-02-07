@@ -86,3 +86,85 @@ We add this to Backend test:
 We do not create a new job because we can re-use the previous installation of java to make the CI **faster**
 
 ![sonar](sonar.png)
+
+### Bonus: splitting workflows
+Workflows are splitted using these files:
+```yaml
+# test.yml
+name: test
+on:
+  push:
+    branches:
+     - main
+     - develop
+  pull_request:
+    branches:
+     - main
+     - develop
+
+jobs:
+  test-backend: 
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2.5.0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          architecture: x64
+
+      - name: Build and test with Maven
+        run: mvn clean verify
+      
+      - name: Sonar Check
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=josse-devops-cpe-lyon_simple-api -Dsonar.organization=josse-devops-cpe-lyon -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+```
+
+```yaml
+# build.yml
+name: build
+on:
+  workflow_run:
+    workflows:
+     - test
+    types:
+     - completed
+    branches:
+     - main
+
+jobs:
+  build-and-push-docker-image:
+    runs-on: ubuntu-22.04
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
+
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+
+      - name: Build image and push backend
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Build image and push database
+        uses: docker/build-push-action@v3
+        with:
+          context: ./deployment/database
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Build image and push httpd
+        uses: docker/build-push-action@v3
+        with:
+          context: ./deployment/router
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
+```

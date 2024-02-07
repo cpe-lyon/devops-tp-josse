@@ -1,31 +1,40 @@
 version: '3.8'
 
 services:
-    backend:
-        container_name: tp1-backend-srv
-        build: ../backend-api/simple-api-student-main
-        networks:
-         - tp1-net
-        depends_on:
-         - database
+  backend:
+    container_name: tp1-backend-srv
+    build: ../backend-api/simple-api-student-main
+    networks:
+      - tp1-net
+    depends_on:
+      - database
+    environment:
+     - POSTGRES_DB=db
+     - POSTGRES_USER=usr
+     - POSTGRES_PASSWORD=pwd
+     - POSTGRES_HOST=tp1-backend-db:5432
 
-    database:
-        container_name: tp1-backend-db
-        build: ../database
-        networks:
-         - tp1-net
-        volumes:
-         - tp1-data:/var/lib/postgresql/data
+  database:
+    container_name: tp1-backend-db
+    build: ../database
+    networks:
+      - tp1-net
+    volumes:
+      - tp1-data:/var/lib/postgresql/data
+    environment:
+     - POSTGRES_DB=db
+     - POSTGRES_USER=usr
+     - POSTGRES_PASSWORD=pwd
 
-    httpd:
-        container_name: tp1-http-index
-        build: ../http-server
-        ports:
-         - 80:80
-        networks:
-         - tp1-net
-        depends_on:
-         - backend
+  httpd:
+      container_name: tp1-http-index
+      build: ../http-server
+      ports:
+        - 80:80
+      networks:
+        - tp1-net
+      depends_on:
+        - backend
 
 networks:
   tp1-net:
