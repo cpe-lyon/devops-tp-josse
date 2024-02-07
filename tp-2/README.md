@@ -1,4 +1,6 @@
 ## TP2
+*By Josse DE OLIVEIRA*\
+[Go Back](../README.md)
 
 ### Creating the repo
 We use a new repository, but link it with this using `git submodule`
