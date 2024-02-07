@@ -1,0 +1,3 @@
+[submodule "tp-3/devops-simple-api-josse"]
+	path = tp-3/devops-simple-api-josse
+	url = https://github.com/cpe-lyon/devops-simple-api-josse.git
