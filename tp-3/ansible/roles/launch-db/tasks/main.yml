@@ -7,7 +7,7 @@
 # We launch our deployed image with the volume
 - name: Launch database
   docker_container:
-    name: tp1-backend-db
+    name: "{{ dbcname }}"
     image: jossedeoliveiracpe/tp-devops-database:latest
     networks:
     - name: tp1-dbnet
@@ -17,3 +17,5 @@
       POSTGRES_DB: "{{ pgdb }}"
       POSTGRES_USER: "{{ pgusr }}"
       POSTGRES_PASSWORD: "{{ pgpwd }}"
+    pull: true
+    recreate: true

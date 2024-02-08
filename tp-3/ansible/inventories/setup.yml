@@ -7,7 +7,8 @@ all:
    pgdb: "db"
    pgusr: "usr"
    pgpwd: "pwd"
-   pgurl: "tp1-backend-db:5432"
+   dbcname: "tp1-backend-db2"
+   pgurl: "{{dbcname}}:5432"
  children:
    # all hosts
    prod: # prod host

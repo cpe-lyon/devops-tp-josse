@@ -1,12 +1,9 @@
 # We launch our deployed image with port 80 to expose it
-- name: Launch HTTPD
+- name: Launch Front
   docker_container:
-    name: tp1-http-index
+    name: tp1-frontend-srv
     networks:
       - name: tp1-net
-    ports:
-      - "80:80"
-      - "8080:8080"
-    image: jossedeoliveiracpe/tp-devops-httpd:latest
+    image: jossedeoliveiracpe/tp-devops-front:latest
     pull: true
     recreate: true

@@ -11,3 +11,5 @@
       POSTGRES_USER: "{{ pgusr }}"
       POSTGRES_PASSWORD: "{{ pgpwd }}"
       POSTGRES_HOST: "{{ pgurl }}"
+    pull: true
+    recreate: true
