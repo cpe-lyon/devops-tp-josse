@@ -7,4 +7,6 @@
     ports:
       - "80:80"
       - "8080:8080"
-    image: jossedeoliveiracpe/tp-devops-httpd:latest
+    image: jossedeoliveiracpe/tp-devops-httpd:extras
+    pull: true
+    recreate: true
